@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Return Book</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2 class="text-center mt-4">Return Book</h2>
+  <form th:action="@{/return}" method="post" class="mt-4" onsubmit="return validateForm()">
+    <div class="form-group">
+      <label for="reference">Reference</label>
+      <input id="reference" class="form-control" type="text" name="reference">
+      <small id="validationMessage" class="text-danger"></small>
+    </div>
+    <div class="form-group text-center">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+<div th:if="${message}">
+  <span style="display: block; margin-top: 10px; text-align: center;" th:text="${message}"></span>
+</div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+  function validateForm() {
+    var referenceInput = document.getElementById("reference");
+    var validationMessage = document.getElementById("validationMessage");
+
+    var alphanumericRegex = /^[0-9]+$/;
+    if (referenceInput.value.length !== 13 || !alphanumericRegex.test(referenceInput.value)) {
+      validationMessage.innerText = "ISBN must be 3 characters long and contain only numbers.";
+      return false;
+    } else {
+      validationMessage.innerText = "";
+      return true;
+    }
+  }
+</script>
+</body>
+</html>
